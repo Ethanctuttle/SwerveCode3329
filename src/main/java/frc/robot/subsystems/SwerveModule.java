@@ -123,7 +123,7 @@ public class SwerveModule {
       }
 
       public Rotation2d getCanCoder() {
-        return Rotation2d.fromDegrees(Double.parseDouble((angleEncoder.getAbsolutePosition()).toString()));
+        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition().getValueAsDouble());
       }
 
       public SwerveModulePosition getState() {
