@@ -47,6 +47,9 @@ public class SwerveModule {
         driveEncoder = driveMotor.getEncoder();
         driveController = driveMotor.getPIDController();
         configDriveMotor();
+        /*if(moduleNumber == 0){
+          driveMotor.setInverted(true);
+        }*/
 
         lastAngle = getState().angle;
     }
