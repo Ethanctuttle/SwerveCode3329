@@ -26,7 +26,7 @@ public class Swerve extends SubsystemBase {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         zeroGyro();
 
-        
+        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), null);
 
         mSwerveMods = 
             new frc.robot.subsystems.SwerveModule[] {
@@ -38,8 +38,6 @@ public class Swerve extends SubsystemBase {
         
             field = new Field2d();
             SmartDashboard.putData("Field", field);
-        
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getStates());
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -86,8 +84,8 @@ public class Swerve extends SubsystemBase {
 
     public Rotation2d getYaw() {
         return (Constants.Swerve.invertGyro)
-            ? Rotation2d.fromDegrees(360 - (gyro.getYaw().getValue()))
-            : Rotation2d.fromDegrees(gyro.getYaw().getValue());
+            ? Rotation2d.fromDegrees(360 - (Double.parseDouble(gyro.getYaw().toString())))
+            : Rotation2d.fromDegrees(Double.parseDouble(gyro.getYaw().toString()));
     }
 
     @Override

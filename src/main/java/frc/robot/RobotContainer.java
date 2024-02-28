@@ -33,11 +33,14 @@ public class RobotContainer {
       new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton robotCentric =
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton intake = 
+      new JoystickButton(driver, Constants.Controls.intake);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
 
   Command ZeroGyro;
+  Command Intake;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     s_Swerve.setDefaultCommand(
@@ -60,7 +63,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    //zeroGyro.toggleOnTrue(ZeroGyro);
+    zeroGyro.toggleOnTrue(ZeroGyro);
+    intake.toggleOnTrue(Intake);
   }
 
   /**
