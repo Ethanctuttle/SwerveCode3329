@@ -47,6 +47,9 @@ public class SwerveModule {
         driveEncoder = driveMotor.getEncoder();
         driveController = driveMotor.getPIDController();
         configDriveMotor();
+        /*if(moduleNumber == 0){
+          driveMotor.setInverted(true);
+        }*/
 
         lastAngle = getState().angle;
     }
@@ -123,7 +126,7 @@ public class SwerveModule {
       }
 
       public Rotation2d getCanCoder() {
-        return Rotation2d.fromDegrees(Double.parseDouble((angleEncoder.getAbsolutePosition()).toString()));
+        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition().getValueAsDouble());
       }
 
       public SwerveModulePosition getState() {

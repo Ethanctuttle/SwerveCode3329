@@ -8,9 +8,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.*;
 
 /**
@@ -22,25 +25,23 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   /* Controllers */
   private final Joystick driver = new Joystick(0);
-
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   /* Driver Buttons */
-  private final JoystickButton zeroGyro =
-      new JoystickButton(driver, XboxController.Button.kY.value);
+  //private final JoystickButton zeroGyro =
+      //new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton robotCentric =
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton intake = 
-      new JoystickButton(driver, Constants.Controls.intake);
+  Trigger intakeButton = new JoystickButton(driver, XboxController.Button.kA.value);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
+  private final Intake s_Intake = new frc.robot.subsystems.Intake();
 
-  Command ZeroGyro;
-  Command Intake;
+  private final IntakeCommand intakeCommand = new IntakeCommand(s_Intake);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     s_Swerve.setDefaultCommand(
@@ -63,8 +64,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    zeroGyro.toggleOnTrue(ZeroGyro);
-    intake.toggleOnTrue(Intake);
+    //zeroGyro.toggleOnTrue(ZeroGyro);
+    new JoystickButton(driver, 1).onTrue(intakeCommand);
   }
 
   /**

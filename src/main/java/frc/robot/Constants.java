@@ -86,7 +86,7 @@ public final class Constants {
       public static final int driveMotorID = 6;
       public static final int angleMotorID = 5;
       public static final int canCoderID = 17;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(327.48046875);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -96,7 +96,7 @@ public final class Constants {
       public static final int driveMotorID = 8;
       public static final int angleMotorID = 7;
       public static final int canCoderID = 18;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(286.34765625);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -106,7 +106,7 @@ public final class Constants {
       public static final int driveMotorID = 4;
       public static final int angleMotorID = 3;
       public static final int canCoderID = 16;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(55.01953125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -116,7 +116,7 @@ public final class Constants {
       public static final int driveMotorID = 2;
       public static final int angleMotorID = 1;
       public static final int canCoderID = 15;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(67.939453125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -130,7 +130,7 @@ public final class Constants {
   }
 
   public static final class Controls {
-    public static final int intake = 0;
+    public static final int intake = 6;
   }
 
   public static final class AutoConstants {
