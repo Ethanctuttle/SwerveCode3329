@@ -8,12 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
-import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.*;
 
 /**
@@ -25,6 +24,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   /* Controllers */
   private final Joystick driver = new Joystick(0);
+  private final Joystick mech = new Joystick(1);
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -39,9 +39,19 @@ public class RobotContainer {
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
-  private final Intake s_Intake = new frc.robot.subsystems.Intake();
+  private final Intake s_Intake = new Intake();
+  private final Arm s_Arm = new Arm();
+  private final Shooter s_Shooter = new Shooter();
+  private final Climb s_Climb = new Climb();
 
   private final IntakeCommand intakeCommand = new IntakeCommand(s_Intake);
+  private final FireShooter fire = new FireShooter(s_Shooter, s_Intake);
+  private final LowerClimb lowerClimb = new LowerClimb(s_Climb);
+  private final RaiseClimb raiseClimb = new RaiseClimb(s_Climb);
+  private final ArmDown armDown = new ArmDown(s_Arm);
+  private final ArmUp armUp = new ArmUp(s_Arm);
+  private final Amp amp = new Amp(s_Intake);
+  private final Feed feed = new Feed(s_Intake);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     s_Swerve.setDefaultCommand(
@@ -51,7 +61,6 @@ public class RobotContainer {
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis),
             () -> robotCentric.getAsBoolean()));
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -59,13 +68,26 @@ public class RobotContainer {
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
+   * 
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    //zeroGyro.toggleOnTrue(ZeroGyro);
-    new JoystickButton(driver, 1).onTrue(intakeCommand);
+    new JoystickButton(mech, XboxController.Button.kA.value).onTrue(intakeCommand);
+    new JoystickButton(mech, XboxController.Button.kRightBumper.value).whileTrue(fire);
+    new JoystickButton(mech, XboxController.Button.kX.value).whileTrue(amp);
+    new POVButton(driver, 180).onTrue(lowerClimb);
+    new POVButton(driver, 0).whileTrue(raiseClimb);
+    new JoystickButton(mech, XboxController.Button.kY.value).onTrue(new MoveArm(s_Arm, 0.675));
+    new JoystickButton(mech, XboxController.Button.kB.value).onTrue(new MoveArm(s_Arm, 0.620));
+    new POVButton(mech, 180).onTrue(new MoveArm(s_Arm, 0.782));
+    new POVButton(mech, 90).onTrue(new MoveArm(s_Arm, 0.660));
+    new POVButton(mech, 270).onTrue(new MoveArm(s_Arm, 0.645));
+    new POVButton(mech, 0).onTrue(new MoveArm(s_Arm, 0.536));
+    new JoystickButton(driver, XboxController.Button.kY.value).whileTrue(armUp);
+    new JoystickButton(driver, XboxController.Button.kA.value).whileTrue(armDown);
+    new JoystickButton(mech, XboxController.Button.kLeftBumper.value).whileTrue(feed);
   }
 
   /**

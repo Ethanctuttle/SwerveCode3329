@@ -124,13 +124,23 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int intakeID = 11;
-    public static final boolean inverted = false;
-    public static final double speed = 10;
+    public static final boolean inverted = true;
+    public static final double speed = 0.5;
     public static final int beamID = 0;
   }
 
-  public static final class Controls {
-    public static final int intake = 6;
+  public static final class ArmConstants {
+    public static final int leftID = 13;
+    public static final int rightID = 12;
+    public static final boolean inverted = true;
+    public static final double speed = 0.2;
+    public static final double inside = 0.525;
+  }
+
+  public static final class ShooterConstants{
+    public static final int topID = 9;
+    public static final int bottomID = 10;
+    public static final double speed = 1;
   }
 
   public static final class AutoConstants {
