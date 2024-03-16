@@ -13,7 +13,7 @@ public class ArmUp extends Command{
 
     @Override
     public void initialize(){
-
+        s_Arm.lift();
     }
 
     @Override

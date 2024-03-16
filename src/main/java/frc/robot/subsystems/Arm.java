@@ -24,7 +24,7 @@ public class Arm extends SubsystemBase{
         right.setInverted(Constants.ArmConstants.inverted);
         
         p = 8;
-        i = 0.1;
+        i = 0.01;
         d = 0.25;
         pid = new ProfiledPIDController(p, i, d, new Constraints(1, 0.5));
         pid.enableContinuousInput(0, 1);

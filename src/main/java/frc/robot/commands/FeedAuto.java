@@ -3,10 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 
-public class Feed extends Command{
+public class FeedAuto extends Command{
     private Intake s_Intake;
-    
-    public Feed(Intake s_Intake){
+
+    public FeedAuto(Intake s_Intake){
         this.s_Intake = s_Intake;
         addRequirements(s_Intake);
     }
@@ -21,12 +21,12 @@ public class Feed extends Command{
     }
 
     @Override
-    public void end(boolean interrupted) {
-        s_Intake.stop();
+    public void end(boolean interrupted){
+        
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isFinished(){
         return false;
     }
 }

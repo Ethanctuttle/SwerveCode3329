@@ -13,7 +13,7 @@ public class ArmDown extends Command{
 
     @Override
     public void initialize(){
-
+        s_Arm.lower();
     }
 
     @Override
