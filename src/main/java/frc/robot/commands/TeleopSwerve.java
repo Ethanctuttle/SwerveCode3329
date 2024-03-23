@@ -16,9 +16,9 @@ public class TeleopSwerve extends Command {
   private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
 
-  private SlewRateLimiter translationLimiter = new SlewRateLimiter(3.0);
-  private SlewRateLimiter strafeLimiter = new SlewRateLimiter(3.0);
-  private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3.0);
+  private SlewRateLimiter translationLimiter = new SlewRateLimiter(20.0);
+  private SlewRateLimiter strafeLimiter = new SlewRateLimiter(20.0);
+  private SlewRateLimiter rotationLimiter = new SlewRateLimiter(180.0);
 
   public TeleopSwerve(
       Swerve s_Swerve,
@@ -37,16 +37,13 @@ public class TeleopSwerve extends Command {
 
   @Override
   public void execute() {
-    /* Get Values, Deadband*/
-    double translationVal =
-        translationLimiter.calculate(
-            MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.stickDeadband));
-    double strafeVal =
-        strafeLimiter.calculate(
-            MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband));
-    double rotationVal =
-        rotationLimiter.calculate(
-            MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.Swerve.stickDeadband));
+    /* Get Values, Deadband */
+    double translationVal = translationLimiter.calculate(
+        MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.stickDeadband));
+    double strafeVal = strafeLimiter.calculate(
+        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband));
+    double rotationVal = rotationLimiter.calculate(
+        MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.Swerve.stickDeadband));
 
     /* Drive */
     s_Swerve.drive(
