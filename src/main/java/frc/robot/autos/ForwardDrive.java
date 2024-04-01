@@ -15,8 +15,8 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 import java.util.List;
 
-public class MoveBackToNoteAuto extends SequentialCommandGroup {
-        public MoveBackToNoteAuto(Swerve s_Swerve, double distance) {
+public class ForwardDrive extends SequentialCommandGroup {
+        public ForwardDrive(Swerve s_Swerve, double distance, double angle) {
                 TrajectoryConfig config = new TrajectoryConfig(
                                 Constants.AutoConstants.kMaxSpeedMetersPerSecond,
                                 Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
@@ -26,7 +26,7 @@ public class MoveBackToNoteAuto extends SequentialCommandGroup {
                 Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
                                 
                                 List.of(new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-                                                new Pose2d(Units.inchesToMeters(48), 0, Rotation2d.fromDegrees(0))),
+                                                new Pose2d(Units.inchesToMeters(distance), 0, Rotation2d.fromDegrees(angle))),
                                 config);
 
                 var thetaController = new ProfiledPIDController(

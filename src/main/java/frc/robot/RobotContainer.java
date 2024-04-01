@@ -35,8 +35,8 @@ public class RobotContainer {
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final Intake s_Intake = new Intake();
-  private final Arm s_Arm = new Arm();
-  private final Shooter s_Shooter = new Shooter();
+  //private final Arm s_Arm = new Arm();
+  //private final Shooter s_Shooter = new Shooter();
   private final Climb s_Climb = new Climb();
   private final LEDs s_LEDs = new LEDs();
 
@@ -47,7 +47,7 @@ public class RobotContainer {
   private final Trigger climbBottomSensor = new Trigger(() -> s_Climb.atLowerLimit());
 
   /* Commands */
-  private final ShootCommand shootCommand = new ShootCommand(s_Shooter, s_Intake, intakeSensor);
+  //private final ShootCommand shootCommand = new ShootCommand(s_Shooter, s_Intake, intakeSensor);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -62,19 +62,38 @@ public class RobotContainer {
             () -> robotCentric.getAsBoolean()));
 
     // Add different auto programs
-    autonChooser.setDefaultOption("Drive off line", new MoveBackToNoteAuto(s_Swerve));
-    autonChooser.addOption("shoot and move",
-        new ShootAuto(s_Arm, s_Intake, s_Shooter, intakeSensor, 41.52).andThen(new MoveBackToNoteAuto(s_Swerve)));
-    autonChooser.addOption("shoot, move, intake, shoot",
-        new ShootAuto(s_Arm, s_Intake, s_Shooter, intakeSensor, 41.52)
+    autonChooser.setDefaultOption("Drive off line", new MoveBackToNoteAuto(s_Swerve, 90));
+    //autonChooser.addOption("shoot and move",
+        //new ShootAuto(s_Arm, s_Intake, s_Shooter, intakeSensor, 32).andThen(new MoveBackToNoteAuto(s_Swerve, 48)));
+    /*autonChooser.addOption("Center Auto",
+        new ShootAuto(s_Arm, s_Intake, s_Shooter, intakeSensor, 32)
+            .andThen(s_Arm.moveArmCommand(-3.8))
             .andThen(s_Intake.intakeCommand().until(intakeSensor).withTimeout(5)
-                .alongWith(new MoveBackToNoteAuto(s_Swerve)))
+                .alongWith(new MoveBackToNoteAuto(s_Swerve, 48)))
             .andThen(() -> s_Swerve.stop(), s_Swerve)
-            .andThen(s_Arm.moveArmCommand(47))
+            .andThen(s_Arm.moveArmCommand(48))
             .andThen(new ShootCommand(s_Shooter, s_Intake, intakeSensor).withTimeout(2))
-            .andThen(s_Arm.moveArmCommand(Constants.ArmConstants.kArmDown)));
-    autonChooser.addOption("Angled Auto One", new AngledAutoOne(s_Swerve, s_Arm, s_Shooter, s_Intake, intakeSensor));
-
+            .andThen(s_Arm.moveArmCommand(Constants.ArmConstants.kArmDown)));*/
+    //autonChooser.addOption("Angled Auto One", new AngledAutoOne(s_Swerve, s_Arm, s_Shooter, s_Intake, intakeSensor));
+    //autonChooser.addOption("LeftBlue", new ShootAuto(s_Arm, s_Intake, s_Shooter, climbBottomSensor, 32). andThen(new ForwardDrive(s_Swerve, 13, -66)).andThen(s_Intake.intakeCommand().until(intakeSensor).withTimeout(5)));
+    autonChooser.addOption("Left Auto", 
+      //new ShootAuto(s_Arm, s_Intake, s_Shooter, intakeSensor, 32)
+          //.andThen(s_Arm.moveArmCommand(-3.8))
+          /* .andThen*/(new ForwardDrive(s_Swerve, 20, -70))
+          //.andThen(s_Intake.intakeCommand().until(intakeSensor).withTimeout(5)
+          .andThen(new ForwardDrive(s_Swerve, 70, 0))
+          //.andThen(s_Arm.moveArmCommand(50))
+          //.andThen(new ForwardDrive(s_Swerve, 9, 25))
+          /* .andThen(new ShootAuto(s_Arm, s_Intake, s_Shooter, intakeSensor, 50)))*/);
+    /*autonChooser.addOption("Right Auto", 
+      new ShootAuto(s_Arm, s_Intake, s_Shooter, intakeSensor, 32)
+          .andThen(s_Arm.moveArmCommand(-3.8))
+          .andThen(new ForwardDrive(s_Swerve, 13, 68))
+          .andThen(s_Intake.intakeCommand().until(intakeSensor).withTimeout(5)
+          .alongWith(new ForwardDrive(s_Swerve, 74, 0))
+          .andThen(s_Arm.moveArmCommand(50))
+          .andThen(new ForwardDrive(s_Swerve, 9, -25))
+          .andThen(new ShootAuto(s_Arm, s_Intake, s_Shooter, intakeSensor, 50))));*/
     // Configure the controller button bindings
     configureButtonBindings();
 
@@ -100,23 +119,23 @@ public class RobotContainer {
 
     /* Operator buttons */
     // bumpers
-    mech.rightBumper()
-        .onTrue(shootCommand.withTimeout(1.2));
-    mech.leftBumper().onTrue(s_Arm.moveArmCommand(56));
+    //mech.rightBumper()
+        //.onTrue(shootCommand.withTimeout(1.2));
+    //mech.leftBumper().onTrue(s_Arm.moveArmCommand(50));
 
     // axyb
-    mech.a()
-        .and(intakeSensor.negate())
-        .whileTrue(s_Intake.intakeCommand());
+    //mech.a()
+        //.and(intakeSensor.negate())
+        //.whileTrue(s_Intake.intakeCommand());
     mech.x().whileTrue(s_Intake.runAmp());
-    mech.y().onTrue(s_Arm.moveArmCommand(36));
-    mech.b().onTrue(s_Arm.moveArmCommand(56));
+    //mech.y().onTrue(s_Arm.moveArmCommand(100));
+    //mech.b().onTrue(s_Arm.moveArmCommand(110));
 
     // dpad
-    mech.povUp().onTrue(s_Arm.moveArmCommand(89));
-    mech.povLeft().onTrue(s_Arm.moveArmCommand(47));
-    mech.povRight().onTrue(s_Arm.moveArmCommand(42));
-    mech.povDown().onTrue(s_Arm.moveArmCommand(-3.8));
+    //mech.povUp().onTrue(s_Arm.moveArmCommand(89));
+    //mech.povLeft().onTrue(s_Arm.moveArmCommand(32));
+    //mech.povRight().onTrue(s_Arm.moveArmCommand(48));
+    //mech.povDown().onTrue(s_Arm.moveArmCommand(-3.8));
   }
 
   /**
